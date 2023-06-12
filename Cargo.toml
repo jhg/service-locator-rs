@@ -11,10 +11,10 @@ categories = ["game-development", "data-structures"]
 keywords = ["service", "locator", "service-locator", "thread-safe"]
 
 [features]
-default = []
+default = ["log"]
 
 [dependencies]
-log = "0.4"
+log = { version = "0.4", optional = true }
 
 [dev-dependencies]
 env_logger = "0.10"

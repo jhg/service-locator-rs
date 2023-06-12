@@ -100,3 +100,7 @@ assert_eq!(is_playing_laser, false);
 ```
 
 Remember to handle the errors instead of using `unwrap()`. It's used in the example for simplicity reasons, and because it's run as a test.
+
+## Logging
+
+The crate uses the [`log`](https://crates.io/crates/log) crate to log. With default features to false it can be disabled.

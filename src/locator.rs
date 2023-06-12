@@ -21,6 +21,7 @@ impl<T: ?Sized> ServiceLocator<T> {
         let mut service = Some(service);
         let mut guard = self.service.write().unwrap_or_else(std::sync::PoisonError::into_inner);
         std::mem::swap(&mut *guard, &mut service);
+        #[cfg(feature = "log")]
         log::info!("Provided <{}> service", std::any::type_name::<T>());
     }
 
@@ -39,9 +40,11 @@ impl<T: ?Sized> ServiceLocator<T> {
             });
         if guard.is_none() {
             std::mem::swap(&mut *guard, &mut service);
+            #[cfg(feature = "log")]
             log::info!("Provided <{}> service", std::any::type_name::<T>());
             return Ok(());
         }
+        #[cfg(feature = "log")]
         log::error!("The service <{}> is already provided", std::any::type_name::<T>());
         Err(ServiceLocatorError::AlreadyProvided)
     }
@@ -56,6 +59,7 @@ impl<T: ?Sized> ServiceLocator<T> {
         if guard.is_some() {
             return Ok(ServiceReadGuard::new(guard));
         }
+        #[cfg(feature = "log")]
         log::error!("The service <{}> is not provided yet", std::any::type_name::<T>());
         Err(ServiceLocatorError::NotProvided)
     }
@@ -70,6 +74,7 @@ impl<T: ?Sized> ServiceLocator<T> {
         if guard.is_some() {
             return Ok(ServiceWriteGuard::new(guard));
         }
+        #[cfg(feature = "log")]
         log::error!("The service <{}> is not provided yet", std::any::type_name::<T>());
         Err(ServiceLocatorError::NotProvided)
     }

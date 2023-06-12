@@ -31,6 +31,7 @@ static AUDIO_SUBSYSTEM: ServiceLocator<dyn AudioSubsystem + Send + Sync> = Servi
 
 #[test]
 fn thread() {
+    #[cfg(feature = "log")]
     env_logger::builder().is_test(true).filter_level(log::LevelFilter::Trace).try_init().unwrap();
 
     AUDIO_SUBSYSTEM.provide(Box::new(MidiPlayer::default()));
