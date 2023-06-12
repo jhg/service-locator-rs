@@ -6,6 +6,7 @@ use std::io;
 pub enum ServiceLocatorError {
     NotProvided,
     AlreadyProvided,
+    /// Some caller panicked while the service was mutably borrowed, see [`std::sync::RwLock::read`] and [`std::sync::RwLock::write`].
     Poisoned,
 }
 
