@@ -1,0 +1,25 @@
+[package]
+name = "service-locator"
+description = "Thread-safe generic service locator"
+version = "0.1.0"
+edition = "2021"
+authors = ["Jesus Hernandez <jesushdez@protonmail.com"]
+license = "Unlicense"
+repository = "https://github.com/jhg/service-locator-rs"
+readme = "README.md"
+categories = ["game-development", "data-structures"]
+keywords = ["service", "locator", "service-locator", "thread-safe"]
+
+[features]
+default = []
+
+[dependencies]
+log = "0.4"
+
+[dev-dependencies]
+env_logger = "0.10"
+criterion = "0.5"
+
+[[bench]]
+name = "criterion"
+harness = false
