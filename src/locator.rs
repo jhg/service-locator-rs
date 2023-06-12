@@ -3,6 +3,7 @@ use std::sync::RwLock;
 use crate::guard::{ServiceReadGuard, ServiceWriteGuard};
 use crate::error::ServiceLocatorError;
 
+/// Allows to provide a service and to get a shared or exclusive access to it.
 #[derive(Debug)]
 pub struct ServiceLocator<T: ?Sized> {
     service: RwLock<Option<Box<T>>>,
