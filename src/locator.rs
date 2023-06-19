@@ -50,6 +50,19 @@ impl<T: ?Sized> ServiceLocator<T> {
         Err(ServiceLocatorError::AlreadyProvided)
     }
 
+    /// Removes the service, returning it if it was provided.
+    /// 
+    /// This is often not needed because the service is automatically removed when the service locator is dropped.
+    /// But in some situations it could be useful to drop it earlier.
+    pub fn remove(&self) -> Option<Box<T>> {
+        let mut guard = self.service.write().unwrap_or_else(std::sync::PoisonError::into_inner);
+        let mut service = None;
+        std::mem::swap(&mut *guard, &mut service);
+        #[cfg(feature = "log")]
+        log::info!("Removed <{}> service", std::any::type_name::<T>());
+        service
+    }
+
     /// Returns a read guard to the service.
     /// 
     /// # Errors
